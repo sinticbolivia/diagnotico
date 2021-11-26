@@ -10,22 +10,23 @@
 			</h1>
 		</div>
 	</div>
-	<!--
 	<div class="row">
 		<div class="col">
-			<div class="mb-3">
-				<div class="input-group">
-					<input type="text" name="keyword" value="" class="form-control" />
-					<div class="input-group-append">
-						<span class="input-group-button">
-							<button type="submit" class="btn btn-primary">Buscar</button>
-						</span>
+			<form action="" method="get">
+				<div class="mb-3">
+					<div class="input-group">
+						<input type="text" name="keyword" value="{{ keyword }}" class="form-control" />
+						<div class="input-group-append">
+							<span class="input-group-button">
+								<button type="submit" class="btn btn-primary">Buscar</button>
+							</span>
+						</div>
 					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
-	-->
+	
 	<div class="row">
 		<div class="col">
 			<div class="table-fluid">
@@ -47,12 +48,15 @@
 				{% for item in diagnosticos %}
 				{% set paciente = pacientesmodel.obtener(item['paciente_id']) %}
 				{% set tratamiento = tratamientosmodel.obtener(item['tratamiento_id']) %}
+				{% set resultado = item['resultado'] | json_decode %}
+				
+				
 				<tr>
 					<td>{{ item['id'] }}</td>
 					<td>
 						{{ paciente['nombres'] }} {{ paciente['apellido_paterno'] }} {{ paciente['apellido_materno'] }}
 					</td>
-					<td>{{ item['resultado'] }}</td>
+					<td>{{ resultado['resultado'] }}</td>
 					<td>{{ item['diagnostico'] }}</td>
 					<th>{{ item['nivel'] }}</th>
 					<td>{{ tratamiento['nombre'] }} ({{tratamiento['frecuencia']}})</td>

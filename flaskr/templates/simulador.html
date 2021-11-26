@@ -23,27 +23,29 @@
 	</div>
 	<div class="card shadow mb-3">
 		<div class="card-header"><h5>Sintomas</h5></div>
-		<div class="card-body">
-			<div class="row">
-				<div class="col">
-					{% for sintoma in sintomas %}
-					<div class="mb-3">
-						<div class="form-check form-switch">
-							<input class="form-check-input" type="checkbox" role="switch" id="sintoma_{{ sintoma['id'] }}" 
-								name="sintoma" value="{{ sintoma['id'] }}" />
-							<label class="form-check-label" for="sintoma_{{ sintoma['id'] }}">{{ loop.index }}. {{ sintoma['nombre'] }}</label>
+		<div class="card-body" id="sintomas-lista-body">
+			<div class="wrap">
+				<div class="row">
+					<div class="col">
+						{% for sintoma in sintomas %}
+						<div class="mb-3">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" role="switch" id="sintoma_{{ sintoma['id'] }}" 
+									name="sintoma" value="{{ sintoma['id'] }}" />
+								<label class="form-check-label" for="sintoma_{{ sintoma['id'] }}">{{ loop.index }}. {{ sintoma['nombre'] }}</label>
+							</div>
 						</div>
+						{% if loop.index == 7 %}
 					</div>
-					{% if loop.index == 7 %}
+					<div class="col">
+						{% endif %}
+						{% endfor %}
+					</div>
 				</div>
-				<div class="col">
-					{% endif %}
-					{% endfor %}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col text-center">
-					<button id="btn-diagnosticar" type="button" class="btn btn-primary">Generar diagnostico</button>
+				<div class="row">
+					<div class="col text-center">
+						<button id="btn-diagnosticar" type="button" class="btn btn-primary">Generar diagnostico</button>
+					</div>
 				</div>
 			</div>
 		</div>

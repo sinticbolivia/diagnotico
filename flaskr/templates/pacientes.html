@@ -2,66 +2,68 @@
 {% block title %} Pacientes {% endblock %}
 {% block header_path_title %} Pacientes {% endblock %}
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col">
-			<h1>
-				Gestion de Pacientes 
-				<a href="{{ url_for('pacientes.nuevo') }}" class="btn btn-primary">Nuevo Paciente</a>
-			</h1>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<div class="mb-3">
-				<form action="{{ url_for('pacientes.index') }}" method="get">
-					<div class="input-group">
-						<input type="text" name="keyword" value="{{ keyword }}" class="form-control" />
-						<div class="input-group-append">
-							<span class="input-group-button">
-								<button type="submit" class="btn btn-primary">Buscar</button>
-							</span>
-						</div>
-					</div>
-				</form>
+<div id="pacientes-container" class="container">
+	<div class="wrap">
+		<div class="row">
+			<div class="col">
+				<h1>
+					Gestion de Pacientes 
+					<a href="{{ url_for('pacientes.nuevo') }}" class="btn btn-primary">Nuevo Paciente</a>
+				</h1>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<div class="table-fluid">
-				<table class="table table-sm table-striped">
-				<thead>
-				<tr>
-					<th>ID</th>
-					<th>Codigo</th>
-					<th>Documento</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Historia</th>
-					<th>Acciones</th>
-				</tr>
-				</thead>
-				<tbody>
-				{% for item in pacientes %}
-				<tr>
-					<td>{{ item['id'] }}</td>
-					<td>{{ item['codigo'] }}</td>
-					<td>{{ item['documento'] }}</td>
-					<td>{{ item['nombres'] }} </td>
-					<td>{{ item['apellido_paterno'] }} {{ item['apellido_materno'] }}</td>
-					<td>{{ item['historial'] }}</td>
-					<td>
-						<a href="{{ url_for('pacientes.simulacion', id=item['id']) }}" class="btn btn-primary btn-sm">
-							Diagnosticar
-						</a>
-						<a href="{{ url_for('pacientes.editar', id=item['id']) }}" class="btn btn-success btn-sm">Modificar</a>
-						<a href="" class="btn btn-danger btn-sm">Eliminar</a>
-					</td>
-				</tr>
-				{% endfor %}
-				</tbody>
-				</table>
+		<div class="row">
+			<div class="col">
+				<div class="mb-3">
+					<form action="{{ url_for('pacientes.index') }}" method="get">
+						<div class="input-group">
+							<input type="text" name="keyword" value="{{ keyword }}" class="form-control" />
+							<div class="input-group-append">
+								<span class="input-group-button">
+									<button type="submit" class="btn btn-primary">Buscar</button>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="table-fluid">
+					<table class="table table-sm table-striped">
+					<thead>
+					<tr>
+						<th>ID</th>
+						<th>Codigo</th>
+						<th>Documento</th>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>Historia</th>
+						<th>Acciones</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for item in pacientes %}
+					<tr>
+						<td>{{ item['id'] }}</td>
+						<td>{{ item['codigo'] }}</td>
+						<td>{{ item['documento'] }}</td>
+						<td>{{ item['nombres'] }} </td>
+						<td>{{ item['apellido_paterno'] }} {{ item['apellido_materno'] }}</td>
+						<td>{{ item['historial'] }}</td>
+						<td>
+							<a href="{{ url_for('pacientes.simulacion', id=item['id']) }}" class="btn btn-primary btn-sm">
+								Diagnosticar
+							</a>
+							<a href="{{ url_for('pacientes.editar', id=item['id']) }}" class="btn btn-success btn-sm">Modificar</a>
+							<a href="" class="btn btn-danger btn-sm">Eliminar</a>
+						</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

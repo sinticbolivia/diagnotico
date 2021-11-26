@@ -37,6 +37,8 @@ def create_app(test_config=None):
 	app.register_blueprint(authentication.bp)
 	
 	app.add_url_rule('/', endpoint='index')
-
+	# import filters
+	from .common import filters
+	filters.register(app)
 	return app
 

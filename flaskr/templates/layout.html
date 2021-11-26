@@ -37,6 +37,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics-->
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
     <link href="{{ url_for('static', filename='vendors/@coreui/chartjs/css/coreui-chartjs.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/agenda.css') }}" rel="stylesheet">
   </head>
   <body>
     <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
@@ -54,11 +55,11 @@
 		</div><br>
         <!--<div class="text-center w-100">SERA</div>-->
       </div>
-      {% include 'navigation.html' %}
+      {%- include 'navigation.html' %}
       <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
     </div>
     <div class="wrapper d-flex flex-column min-vh-100 bg-light">
-      {% include 'header-menu.html' %}
+		{% include 'header-menu.html' with context %}
       <div class="body flex-grow-1 px-3">
 		{% with messages = get_flashed_messages() %}
 			{% if messages %}

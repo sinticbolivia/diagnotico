@@ -25,7 +25,12 @@ def index():
 		_pacientes_ = tratamientos.search(keyword)
 	else:
 		_pacientes_ = tratamientos.listar()
-	return render_template('tratamientos.html', pacientes=_pacientes_, keyword=keyword if keyword is not None else '')
+	return render_template(
+		'tratamientos.html', 
+		pacientes=_pacientes_, 
+		keyword=keyword if keyword is not None else '',
+		header_path='Tratamientos'
+	)
 
 @bp.route('/tratamientos/nuevo', methods=('GET', 'POST'))
 @login_required
@@ -41,7 +46,7 @@ def nuevo():
 		return redirect(url_for('tratamientos.index'))
 	
 	
-	return render_template('nuevo-tratamiento.html')
+	return render_template('nuevo-tratamiento.html', header_path='Nuevo Tratamiento')
 
 @bp.route('/tratamientos/editar/<id>')
 @login_required

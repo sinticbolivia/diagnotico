@@ -1,3 +1,6 @@
+import sqlite3
+import traceback
+import sys
 from flask import (
     current_app, Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
@@ -34,3 +37,25 @@ def listar():
 	query = 'SELECT * FROM diagnosticos ORDER BY id DESC'
 	return db.execute(query).fetchall()
 	
+def search(keyword):
+	query = "select d.id, d.paciente_id, d.tratamiento_id, d.diagnostico, d.tratamiento, d.resultado"\
+			", t.nombre, p.nombres, p.apellido_paterno, p.apellido_materno, p.historial "\
+			"from diagnosticos d "\
+			"join pacientes p on p.id = d.paciente_id "\
+			"join tratamientos t on t.id = d.tratamiento_id " \
+			"WHERE 1 "\
+			"AND (p.nombres LIKE '%?%' OR p.apellido_paterno LIKE '%?%' OR p.apellido_materno LIKE '%?%' OR p.historial LIKE '%?%')"
+	query = query.replace('?', keyword)
+	print(query)
+	try:
+		db = get_db()
+		return db.execute(query).fetchall()
+	except sqlite3.Error as er:
+		print('SQLite error: %s' % (' '.join(er.args)))
+		print("Exception class is: ", er.__class__)
+		print('SQLite traceback: ')
+		exc_type, exc_value, exc_tb = sys.exc_info()
+		print(traceback.format_exception(exc_type, exc_value, exc_tb))
+	except Exception as e:
+		print('BUSQUEDA DIAGNOSTICO ERROR\n', e, '\n', query)
+		return []

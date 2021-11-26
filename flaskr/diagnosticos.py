@@ -16,12 +16,21 @@ bp = Blueprint('diagnosticos', __name__)
 @bp.route('/diagnosticos')
 @login_required
 def index():
+	keyword = request.args.get('keyword')
 	
-	diagnosticos = diagnosticosmodel.listar()
+	diagnosticos = []
+	if keyword is not None and keyword:
+		diagnosticos = diagnosticosmodel.search(keyword)
+	else:
+		keyword = ''
+		diagnosticos = diagnosticosmodel.listar()
+		
 	return render_template('diagnosticos.html', 
 		diagnosticos=diagnosticos, 
 		model=diagnosticosmodel, 
 		pacientesmodel=pacientesmodel,
-		tratamientosmodel=tratamientosmodel
+		tratamientosmodel=tratamientosmodel,
+		keyword=keyword,
+		header_path='Diagnosticos',
 	)
 
