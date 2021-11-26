@@ -1,0 +1,146 @@
+{% extends 'layout.html' %}
+{% block title%} Nuevo Paciente {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<h1>
+				Nuevo Paciente 
+				<a href="{{ url_for('pacientes.index') }}" class="btn btn-danger">Cancelar</a>
+			</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<form id="form-nuevo" action="{{ url_for('pacientes.nuevo') }}" method="post" novalidate>
+				{% if paciente %}
+				<input type="hidden" name="id" value="{{ paciente['id'] }}" />
+				{% endif %}
+				<div class="row">
+					<div class="col">
+						<div class="mb-3">
+							<label>Codigo</label>
+							<input type="text" name="codigo" 
+								value="{{ paciente['codigo'] if paciente else '' }}" class="form-control" required />
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="mb-3">
+							<label>Historial</label>
+							<input type="text" name="historial" value="{{ paciente['historial'] if paciente else '' }}" class="form-control" required />
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="mb-3">
+							<label>Nombres</label>
+							<input type="text" name="nombres" value="{{ paciente['nombres'] if paciente else '' }}" class="form-control" required />
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="mb-3">
+							<label>Apellido Paterno</label>
+							<input type="text" name="apellido_paterno" value="{{ paciente['apellido_paterno'] if paciente else '' }}" class="form-control" required />
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="mb-3">
+							<label>Apellido Materno</label>
+							<input type="text" name="apellido_materno" value="{{ paciente['apellido_materno'] if paciente else '' }}" class="form-control" required />
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="mb-3">
+							<label>Documento</label>
+							<input type="text" name="documento" value="{{ paciente['documento'] if paciente else '' }}" class="form-control" required />
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="mb-3">
+							<label>Sexo</label>
+							<select name="sexo" class="form-control" required>
+								<option value="Masculino">Masculino</option>
+								<option value="Femenino">Femenino</option>
+							</select>
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="mb-3">
+							<label>Fecha nacimiento</label>
+							<input type="date" name="fecha_nacimiento" 
+								value="{{ paciente['fecha_nacimiento'] if paciente else '' }}" class="form-control" required />
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="mb-3">
+							<label>Direccion</label>
+							<input type="text" name="direccion" value="{{ paciente['direccion'] if paciente else '' }}" class="form-control" />
+						</div>
+					</div>
+					<div class="col">
+						<div class="mb-3">
+							<label>Telefono</label>
+							<input type="text" name="telefono" value="{{ paciente['telefono'] if paciente else '' }}" class="form-control" />
+						</div>
+					</div>
+					<div class="col">
+						<!--
+						<div class="mb-3">
+							<label>Ocupacion</label>
+							<input type="text" name="ocupacion" value="{{ paciente['ocupacion'] if paciente else '' }}" class="form-control" />
+						</div>
+						-->
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<button type="submit" class="btn btn-primary">Guardar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block footer_js %}
+<script>
+(function()
+{
+	const form = document.querySelector('#form-nuevo');
+	form.addEventListener('submit', function(e)
+	{
+		form.classList.remove('was-validated');
+		try
+		{
+			form.classList.add('was-validated');
+			if( !form.checkValidity() )
+			{
+				e.preventDefault();
+				return false;
+			}
+		}
+		catch(e)
+		{
+			e.preventDefault();
+			console.log(e);
+			alert(e.error || 'Error desconocido');
+			return false;
+		}
+	});
+})();
+</script>
+{% endblock %}

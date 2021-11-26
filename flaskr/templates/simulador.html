@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+{% block title%} Nuevo Diagnostico {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col"><h1>Diagnostico</h1></div>
+	</div>
+	<div class="card shadow mb-3">
+		<div class="card-header"><h5 class="card-title">Paciente</h5></div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col">
+					<div><b>Historia clinica:</b> {{ paciente['historial'] }}</div>
+					<div>
+						<b>Paciente:</b> 
+						{{ paciente['nombres'] }}  {{ paciente['apellido_paterno'] }}  {{ paciente['apellido_materno'] }}
+					</div>
+				</div>
+				<div class="col"></div>
+			</div>
+		</div>
+	</div>
+	<div class="card shadow mb-3">
+		<div class="card-header"><h5>Sintomas</h5></div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col">
+					{% for sintoma in sintomas %}
+					<div class="mb-3">
+						<div class="form-check form-switch">
+							<input class="form-check-input" type="checkbox" role="switch" id="sintoma_{{ sintoma['id'] }}" 
+								name="sintoma" value="{{ sintoma['id'] }}" />
+							<label class="form-check-label" for="sintoma_{{ sintoma['id'] }}">{{ loop.index }}. {{ sintoma['nombre'] }}</label>
+						</div>
+					</div>
+					{% if loop.index == 7 %}
+				</div>
+				<div class="col">
+					{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					<button id="btn-diagnosticar" type="button" class="btn btn-primary">Generar diagnostico</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-resultado" class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Resultados</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3 id="resultado-diagnostico">Sin resultado de diagnostico</h3>
+        <p>Desea guardar los resultados?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="btn-guardar-diagnostico">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block footer_js %}
+<script>
+const paciente = {{ json.dumps(paciente) | safe }};
+const resultados = {{ json.dumps(resultados) | safe }};
+</script>
+<script src="{{ url_for('static', filename='js/simulador.js') }}" type="module" defer></script>
+{% endblock %}

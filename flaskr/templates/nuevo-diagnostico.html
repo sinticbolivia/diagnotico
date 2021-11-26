@@ -1,0 +1,129 @@
+{% extends 'layout.html' %}
+{% block title%} Nuevo Diagnostico {% endblock %}
+
+{% block content %}
+<form id="form-diagnostico" action="{{ url_for('pacientes.crearDiagnostico', id=paciente['id']) }}" method="post" novalidate>
+	<input type="hidden" name="paciente_id" value="{{ paciente['id'] }}" />
+	<input type="hidden" name="resultado" value="{{ resultado64 }}" />
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1>
+					Nuevo Diagnostico
+					<a href="{{ url_for('tratamientos.index') }}" class="btn btn-danger">Cancelar</a>
+				</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 col-sm-6">
+				<div class="card shadow mb-3">
+					<div class="card-header"><h5 class="card-title">Paciente</h5></div>
+					<div class="card-body">
+						<div><b>Historia</b> {{ paciente['historial'] }}</div>
+						<div><b>Nombres</b> {{ paciente['nombres'] }}</div>
+						<div><b>Apellidos</b> {{ paciente['apellido_paterno'] }} {{ paciente['apellido_materno'] }}</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-sm-6">
+				<div class="card shadow mb-3">
+					<div class="card-header"><h5 class="card-title">Diagnostico</h5></div>
+					<div class="card-body">
+						<div><b>Resultado</b> {{ resultado['resultado'] }}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="card shadow mb-3">
+					<div class="card-header"><h5 class="card-title">Datos para el diagnostico</h5></div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12">
+								<div class="mb-3">
+									<label>Diagnostico</label>
+									<textarea name="diagnostico" class="form-control" rows="5" required></textarea>
+									<div class="invalid-feedback">Campo requerido</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="mb-3">
+									<label>Nivel</label>
+									<select name="nivel" class="form-select" required>
+										<option value="Alto">Alto</option>
+									</select>
+									<div class="invalid-feedback">Campo requerido</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="card shadow mb-3">
+					<div class="card-header"><h5 class="card-title">Datos para el tratamiento</h5></div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12">
+								<div class="mb-3">
+									<label>Tratamiento</label>
+									<select name="tratamiento_id" class="form-select" required>
+										{% for tratamiento in tratamientos %}
+										<option value="{{ tratamiento['id'] }}">{{ tratamiento['nombre'] }} ({{ tratamiento['frecuencia'] }})</option>
+										{% endfor %}
+									</select>
+									<div class="invalid-feedback">Campo requerido</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="mb-3">
+									<label>Descripcion</label>
+									<textarea name="tratamiento" class="form-control" rows="5" required></textarea>
+									<div class="invalid-feedback">Campo requerido</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<button type="submit" class="btn btn-primary d-block w-100">Guardar</button>
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}
+{% block footer_js %}
+<script>
+(function()
+{
+	const form = document.querySelector('#form-diagnostico');
+	form.addEventListener('submit', function(e)
+	{
+		this.classList.remove('was-validated');
+		try
+		{
+			this.classList.add('was-validated');
+			if( !this.checkValidity() )
+			{
+				e.preventDefault();
+				return false;
+			}
+			
+		}
+		catch(e)
+		{
+			e.preventDefault();
+		}
+	});
+})();
+</script>
+{% endblock %}

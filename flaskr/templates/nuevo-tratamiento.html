@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+{% block title%} Nuevo Tratamiento {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<h1>
+				Nuevo Tratamiento
+				<a href="{{ url_for('tratamientos.index') }}" class="btn btn-danger">Cancelar</a>
+			</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<form id="form-nuevo" action="{{ url_for('tratamientos.nuevo') }}" method="post" novalidate>
+				{% if tratamiento %}
+				<input type="hidden" name="id" value="{{ tratamiento['id'] }}" />
+				{% endif %}
+				<div class="row">
+					<div class="col">
+						<div class="mb-3">
+							<label>Nombre</label>
+							<input type="text" name="nombre" value="{{ tratamiento['nombre'] if tratamiento else '' }}" class="form-control" required />
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="mb-3">
+							<label>Descripcion </label>
+							<textarea name="descripcion" class="form-control">{{ tratamiento['descripcion'] if tratamiento else '' }}</textarea>
+							
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="mb-3">
+						<label>Frecuencia</label>
+						<select name="frecuencia" class="form-control" required>
+							<option value="Diario" {{ 'selected' if tratamiento and tratamiento['Diario'] else '' }}>Diario</option>
+							<option value="Semanal" {{ 'selected' if tratamiento and tratamiento['Semanal'] else '' }}>Semanal</option>
+						</select>
+						<div class="invalid-feedback">Campo requerido</div>
+					</div>
+				</div>
+				
+				
+				<div class="row">
+					<div class="col">
+						<button type="submit" class="btn btn-primary">Guardar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block footer_js %}
+<script>
+(function()
+{
+	const form = document.querySelector('#form-nuevo');
+	form.addEventListener('submit', function(e)
+	{
+		form.classList.remove('was-validated');
+		try
+		{
+			form.classList.add('was-validated');
+			if( !form.checkValidity() )
+			{
+				e.preventDefault();
+				return false;
+			}
+		}
+		catch(e)
+		{
+			e.preventDefault();
+			console.log(e);
+			alert(e.error || 'Error desconocido');
+			return false;
+		}
+	});
+})();
+</script>
+{% endblock %}

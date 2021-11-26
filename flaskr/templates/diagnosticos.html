@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% block title%} Diagnosticos {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<h1>
+				Gestion de Diagnosticos
+			</h1>
+		</div>
+	</div>
+	<!--
+	<div class="row">
+		<div class="col">
+			<div class="mb-3">
+				<div class="input-group">
+					<input type="text" name="keyword" value="" class="form-control" />
+					<div class="input-group-append">
+						<span class="input-group-button">
+							<button type="submit" class="btn btn-primary">Buscar</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	-->
+	<div class="row">
+		<div class="col">
+			<div class="table-fluid">
+				<table class="table table-sm table-striped">
+				<thead>
+				<tr>
+					<th>ID</th>
+					<th>Paciente</th>
+					<th>Resultado</th>
+					<th>Diagnostico</th>
+					<th>Nivel</th>
+					<th>Tratamiento</th>
+					<th>Descripcion</th>
+					<th>Fecha</th>
+					<th>Acciones</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for item in diagnosticos %}
+				{% set paciente = pacientesmodel.obtener(item['paciente_id']) %}
+				{% set tratamiento = tratamientosmodel.obtener(item['tratamiento_id']) %}
+				<tr>
+					<td>{{ item['id'] }}</td>
+					<td>
+						{{ paciente['nombres'] }} {{ paciente['apellido_paterno'] }} {{ paciente['apellido_materno'] }}
+					</td>
+					<td>{{ item['resultado'] }}</td>
+					<td>{{ item['diagnostico'] }}</td>
+					<th>{{ item['nivel'] }}</th>
+					<td>{{ tratamiento['nombre'] }} ({{tratamiento['frecuencia']}})</td>
+					<td>
+						{{ item['tratamiento'] }}
+					</td>
+					<th>{{ item['creation_date'] }}</th>
+					<td>
+						<!-- <a href="" class="btn btn-success btn-sm">Modificar</a> -->
+						<a href="" class="btn btn-danger btn-sm">Eliminar</a>
+					</td>
+				</tr>
+				{% endfor %}
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block footer_js %}
+<script>
+(function()
+{
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block title%} Tratamientos {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<h1>
+				Gestion de Tratamientos
+				<a href="{{ url_for('tratamientos.nuevo') }}" class="btn btn-primary">Nuevo Tratamiento</a>
+			</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="mb-3">
+				<form action="{{ url_for('tratamientos.index') }}" method="get">
+					<div class="input-group">
+						<input type="text" name="keyword" value="{{ keyword }}" class="form-control" />
+						<div class="input-group-append">
+							<span class="input-group-button">
+								<button type="submit" class="btn btn-primary">Buscar</button>
+							</span>
+						</div>
+					</div>	
+				
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="table-fluid">
+				<table class="table table-sm table-striped">
+				<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Frecuencia</th>
+					<th>Acciones</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for item in pacientes %}
+				<tr>
+					<td>{{ item['id'] }}</td>
+					<td>{{ item['nombre'] }}</td>
+					<td>{{ item['frecuencia'] }}</td>
+					<td>
+						<a href="{{ url_for('tratamientos.editar', id=item['id']) }}" class="btn btn-success btn-sm">Modificar</a>
+						<a href="{{ url_for('tratamientos.borrar', id=item['id']) }}" class="btn btn-danger btn-sm">Eliminar</a>
+					</td>
+				</tr>
+				{% endfor %}
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block footer_js %}
+<script>
+(function()
+{
+})();
+</script>
+{% endblock %}
