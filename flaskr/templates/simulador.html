@@ -56,14 +56,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Resultados</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" data-coreui-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <h3 id="resultado-diagnostico">Sin resultado de diagnostico</h3>
         <p>Desea guardar los resultados?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-coreui-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" id="btn-guardar-diagnostico">Guardar</button>
       </div>
     </div>
@@ -72,6 +72,7 @@
 {% endblock %}
 {% block footer_js %}
 <script>
+const baseurl	= '{{ url_for('index') }}';
 const paciente = {{ json.dumps(paciente) | safe }};
 const resultados = {{ json.dumps(resultados) | safe }};
 </script>

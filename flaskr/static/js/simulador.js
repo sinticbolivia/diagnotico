@@ -72,7 +72,7 @@
 			elRes.name = 'resultado';
 			elRes.value = btoa(JSON.stringify(resultado));
 			form.style	= 'display:none;';
-			form.action = '/pacientes/'+ paciente.id +'/diagnosticos/nuevo';
+			form.action = baseurl + 'pacientes/'+ paciente.id +'/diagnosticos/nuevo';
 			form.method = 'post';
 			form.appendChild(elRes);
 			document.body.appendChild(form);

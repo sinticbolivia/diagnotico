@@ -2,10 +2,13 @@ import os
 
 from flask import Flask
 
+# app = Flask(__name__, instance_relative_config=True)
 
 def create_app(test_config=None):
 	# create and configure the app
 	app = Flask(__name__, instance_relative_config=True)
+	#global app
+	
 	app.config.from_mapping(
 		SECRET_KEY='dev',
 		DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -29,13 +32,15 @@ def create_app(test_config=None):
 	from . import tratamientos
 	from . import diagnosticos
 	from . import authentication
+	from . import pages
 	
 	db.init_app(app)
 	app.register_blueprint(pacientes.bp)
 	app.register_blueprint(tratamientos.bp)
 	app.register_blueprint(diagnosticos.bp)
 	app.register_blueprint(authentication.bp)
-	
+	app.register_blueprint(pages.bp)
+
 	app.add_url_rule('/', endpoint='index')
 	# import filters
 	from .common import filters

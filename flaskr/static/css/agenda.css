@@ -2,3 +2,4 @@
 #sintomas-lista-body .wrap{background-color:#ffffff77;padding:15px;margin:-15px;}
 #pacientes-container{background: url('../images/bg01.jpeg') no-repeat center center;background-size:cover;}
 #pacientes-container > .wrap{background-color:rgba(255, 255, 255, 0.5);padding:15px;margin:-15px;}
+#login-page{background:url('../images/medical-bg01.jpg') no-repeat;background-size:auto;}
