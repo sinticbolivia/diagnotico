@@ -6,7 +6,6 @@ from flask import (
 
 from werkzeug.security import check_password_hash, generate_password_hash
 import base64
-import json
 
 from flaskr.db import get_db
 from flaskr.authentication import login_required

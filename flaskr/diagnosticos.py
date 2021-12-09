@@ -34,3 +34,28 @@ def index():
 		header_path='Diagnosticos',
 	)
 
+@bp.route('/diagnosticos/editar/<id>')
+@login_required
+def editar(id):
+	diagnostico = diagnosticosmodel.obtener(id)
+	if diagnostico is None:
+		flash('El diagnostico no existe', 'error')
+		return redirect( url_for('diagnosticos.index') )
+	paciente = pacientesmodel.obtener(diagnostico['paciente_id'])
+	tratamientos = tratamientosmodel.listar()
+	
+	return render_template('editar-diagnostico.html',
+		header_path='Diagnosticos',
+		diagnostico = diagnostico,
+		paciente = paciente,
+		tratamientos = tratamientos
+	)
+	
+@bp.route('/diagnosticos/guardar', methods=['POST'])
+@login_required
+def guardar():
+	id = request.form.get('id')
+	diagnosticosmodel.update(id, request.form.copy())
+	# diagnostico.tratamiento_id = request
+	flash('Diagnostico guardado', 'success')
+	return redirect( url_for('diagnosticos.index') )

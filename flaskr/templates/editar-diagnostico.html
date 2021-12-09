@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% block title%} Editar Diagnostico {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<h1>
+				Editar Diagnostico
+				<a href="{{ url_for('diagnosticos.index') }}" class="btn btn-danger">Cancelar</a>
+			</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<form id="form-editar" action="{{ url_for('diagnosticos.guardar') }}" method="post" novalidate>
+				<input type="hidden" name="id" value="{{ diagnostico['id'] }}" />
+				<!-- {{ diagnostico }} -->
+				<div class="row">
+					<div class="col-12 col-sm-4">
+						<div class="mb-3">
+							<label>Nombre Paciente</label>
+							<input type="text" name="" value="{{ paciente['nombres'] }}" class="form-control" readonly />
+						</div>
+					</div>
+					<div class="col-12 col-sm-4">
+						<div class="mb-3">
+							<label>Apellido Paterno Paciente</label>
+							<input type="text" name="" value="{{ paciente['apellido_paterno'] }}" class="form-control" readonly />
+						</div>
+					</div>
+					<div class="col-12 col-sm-4">
+						<div class="mb-3">
+							<label>Apellido Materno Paciente</label>
+							<input type="text" name="" value="{{ paciente['apellido_materno'] }}" class="form-control" readonly />
+						</div>
+					</div>
+					<div class="col-12 col-sm-12">
+						<div class="mb-3">
+							<label>Tratamiento</label>
+							<select name="tratamiento_id" class="form-select">
+								{% for tratamiento in tratamientos %}
+								<option value="{{ tratamiento['id'] }}" 
+									{{ 'selected' if tratamiento['id'] == diagnostico['tratamiento_id'] else ''}}>
+									{{ tratamiento['nombre'] }} ({{ tratamiento['frecuencia'] }})
+								</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					<div class="col-12 col-sm-12">
+						<div class="mb-3">
+							<label>Diagnostico</label>
+							<textarea name="diagnostico" rows="5" class="form-control">{{ diagnostico['diagnostico'] }}</textarea>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="mb-3">
+							<label>Descripcion</label>
+							<textarea name="tratamiento" class="form-control" rows="5" required>{{ diagnostico['tratamiento'] }}</textarea>
+							<div class="invalid-feedback">Campo requerido</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<button type="submit" class="btn btn-primary w-100">Guardar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

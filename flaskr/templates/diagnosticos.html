@@ -65,8 +65,8 @@
 					</td>
 					<th>{{ item['creation_date'] }}</th>
 					<td>
-						<!-- <a href="" class="btn btn-success btn-sm">Modificar</a> -->
-						<a href="" class="btn btn-danger btn-sm">Eliminar</a>
+						<a href="{{ url_for('diagnosticos.editar', id=item['id']) }}" class="btn btn-success btn-sm">Modificar</a>
+						<a href="#" class="btn btn-danger btn-sm">Eliminar</a>
 					</td>
 				</tr>
 				{% endfor %}

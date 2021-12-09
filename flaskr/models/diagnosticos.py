@@ -28,7 +28,8 @@ def create(_data_):
 def obtener(id):
 	db = get_db()
 	query = 'SELECT * FROM diagnosticos WHERE id = {0}'.format(id)
-	return db.execute(query).fetchone()
+	obj = db.execute(query).fetchone()
+	return dbfunctions.parseRecord(obj)	
 	
 	
 def listar():
@@ -59,3 +60,17 @@ def search(keyword):
 	except Exception as e:
 		print('BUSQUEDA DIAGNOSTICO ERROR\n', e, '\n', query)
 		return []
+
+def update(id, _data_):
+
+	data = _data_ # databasecommon.prepareData(_data_)
+	
+	query = dbfunctions.prepareUpdate('diagnosticos', data)
+	print(query)
+	
+	try:
+		db = get_db()
+		db.execute(query, list(data.values()) + [id])
+		db.commit()
+	except:
+		db.rollback()
